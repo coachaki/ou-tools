@@ -1,0 +1,6 @@
+{
+	"manifest_version": 2,
+	"name": "OU Tools",
+	"version": "0.0.1",
+	"description": "Tools for doing mundane tasks inside OU Campus."
+}
