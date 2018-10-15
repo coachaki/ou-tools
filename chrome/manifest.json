@@ -1,6 +1,27 @@
 {
-	"manifest_version": 2,
 	"name": "OU Tools",
-	"version": "0.0.1",
-	"description": "Tools for doing mundane tasks inside OU Campus."
+	"version": "0.0.1", // big-features.small-features.bugfixes
+	"description": "Tools for doing mundane tasks inside OU Campus.",
+	"manifest_version": 2, // this must be version 2
+
+	"permissions": ["activeTab", "declarativeContent", "storage"],
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+	},
+	"icons": {
+		"16": "images/ou-tools-16.png",
+		"32": "images/ou-tools-32.png",
+		"48": "images/ou-tools-48.png",
+		"128": "images/ou-tools-128.png"
+	},
+	"page_action": {
+		"default_icon": {
+			"16": "images/ou-tools-16.png",
+			"32": "images/ou-tools-32.png",
+			"48": "images/ou-tools-48.png",
+			"128": "images/ou-tools-128.png"
+		},
+		"default_popup": "popup.html"
+	}
 }
