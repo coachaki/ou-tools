@@ -1,0 +1,14 @@
+{
+    "name": "(zz-dev) Sample Gallery",
+    "description": "Sample+ gallery to test gallery outputs",
+    "group": "",
+    "readers": "",
+    "thumbnail_width": "100",
+    "thumbnail_height": "100",
+    "force_crop": "false",
+    "advanced": "",
+    "site_locked": "true",
+    "site": "Building",
+    "type": "3",
+    "tags": ""
+}
