@@ -1,7 +1,7 @@
 // None of them really work yet.
 
 function query(endpoint, params, method = 'get') {
-  let xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.addEventListener('load', function (evt) {
     console.log(JSON.parse(this.response));
     console.log(evt);
@@ -11,35 +11,35 @@ function query(endpoint, params, method = 'get') {
   // xhr.send(params); // TODO: need to make sure this gets sent in the proper format
 }
 
-var getSites = function (account) {
-  let xhr = new XMLHttpRequest();
-  xhr.addEventListener('load', function (evt) {
+function getSites(account) {
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', (evt) => {
     console.log(JSON.parse(this.response));
     console.log(evt);
   });
 
-  let api = '/sites/list';
+  const api = '/sites/list';
   // let params = { "account" : "TERRY" };
 
   xhr.open('get', api);
-  xhr.send('account=' + account);
-};
+  xhr.send(`account=${account}`);
+}
 
-var getProperties = function (path) {
-  let endpoint = '/files/properties';
-  let method = 'get';
+function getProperties(path) {
+  const endpoint = '/files/properties';
+  const method = 'get';
 
   query(endpoint, path, method);
-};
+}
 
-var getParams = function (params) {
-  var output = '';
-  params.parameters.forEach(function (field) {
+function getParams(params) {
+  let output = '';
+  params.parameters.forEach((field) => {
     if (field.section) {
-      output += '- ' + field.section + '\n';
+      output += `- ${field.section}\n`;
     }
-    output += '\t- **' + field.prompt + '**: ' + field.alt + '\n';
-  })
+    output += `\t- **${field.prompt}**: ${field.alt}\n`;
+  });
   console.log(output);
   return output;
-};
+}
