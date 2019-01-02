@@ -2,37 +2,25 @@
 <html>
 
 <head>
-    <style>
-    body { width: 240px; font-size: 14px; background-color: pink; margin:0; }
-    button {
-        height: 30px;
-        width: 30px;
-        outline: none;
-    }
-    ul.action-list {
-        padding-left: 0;
-        list-style: none;
-        margin: 0;
-    }
-    ul.action-list a.action {
-        padding: .5rem .8rem;
-        display: block;
-    }
-
-    ul.action-list a.action:hover {
-        background-color: salmon;
-    }
-    </style>
+  <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
-    <ul class="action-list">
-        <li><a class="action" href="#">Action 1</a></li>
-        <li><a class="action" href="#">Action 2</a></li>
-        <li><a class="action" href="#">Action 3</a></li>
+  <nav class="main-menu">
+    <ul class="top-menu">
+      <li class="top-item"><a class="type" href="#">Development Setup</a>
+        <ul class="action-list">
+          <li><a href="#" class="action"></a></li>
+          <li><a href="#" class="action"></a></li>
+          <li><a href="#" class="action"></a></li>
+        </ul>
+      </li>
+      <li class="top-item"><a class="type" href="#">Development Utility</a></li>
+      <li class="top-item"><a class="type" href="#">Development Final Actions</a></li>
     </ul>
-    <button id="changeColor"></button>
-    <script src="popup.js"></script>
+  </nav>
+  <button id="changeColor"></button>
+  <script src="popup.js"></script>
 </body>
 
 </html>

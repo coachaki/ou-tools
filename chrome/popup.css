@@ -1,0 +1,31 @@
+body {
+  width: 300px;
+  font-size: 14px;
+  background-color: pink;
+  margin: 0;
+}
+
+button {
+  height: 30px;
+  width: 30px;
+  outline: none;
+}
+
+.main-menu ul {
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.main-menu li > a {
+  padding: .5rem .8rem;
+  display: block;
+}
+
+.main-menu li > a:hover {
+  background-color: salmon;
+}
+
+.main-menu li.top-item > ul {
+  display: none;
+}
