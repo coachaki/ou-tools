@@ -27,5 +27,5 @@ button {
 }
 
 .main-menu li.top-item > ul {
-  display: none;
+  margin-left: 1em;
 }
