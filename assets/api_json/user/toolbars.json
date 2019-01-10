@@ -1,0 +1,15 @@
+{
+	"new":{
+		"path":"/toolbars/new",
+		"params":{
+			"account":null,
+			"buttons":"save,saveas,revert,tinyautosave,cut,copy,paste,pastetext,search,replace,undo,redo,spellchecker,removeformat,bold,italic,underline,strikethrough,bullist,numlist,outdent,indent,blockquote,sup,sub,justifyleft,justifycenter,justifyright,justifyfull,link,unlink,mailto,anchor,help,fontselect,fontsizeselect,formatselect,styleselect,forecolor,backcolor,image,media,hr,linebreak,charmap,cleanup,visualaid,visualblocks,code,codeprotect,snippet,ouasset,tablecontrols,jmform,jmform_delete,jmform_insert_input,jmform_insert_select,jmform_insert_textarea",
+			"name":"required",
+			"font_size_set":"",
+			"paste_option":"html"
+		},
+		"response":[],
+		"type":"post"
+	}
+
+}

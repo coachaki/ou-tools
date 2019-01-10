@@ -1,0 +1,12 @@
+{
+	"new":{
+		"path":"/fontsizesets/new",
+		"params":{
+			"account":null,
+			"name":"required",
+			"sizes":[]
+			},
+		"response":[],
+		"type":"post"
+	}
+}

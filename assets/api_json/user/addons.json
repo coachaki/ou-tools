@@ -1,0 +1,15 @@
+{
+	"new":{
+		"path":"/addons/new",
+		"params":{
+				"name":"required",
+				"url":"required",
+				"admin_only":false,
+				"new_win":false,
+				"number":999999,
+				"account":null
+			},
+		"response":[],
+		"type":"post"
+	}
+}

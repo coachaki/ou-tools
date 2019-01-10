@@ -1,0 +1,22 @@
+{
+	"new":{
+		"path":"/templates/new",
+		"params":{
+			"tcf_value_0":"each item corresponds to its number",
+			"site":null,
+			"path":"/",
+			"template":"required",
+			"submit":"Create"
+		},
+		"type":"post",
+		"response":[]
+		},
+	"list":{
+		"path":"/templates/list",
+		"params":{
+			"site":null
+		},
+		"type":"get",
+		"response":[]
+	}
+}

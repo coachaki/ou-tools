@@ -1,0 +1,17 @@
+{
+	"new":{
+		"path":"/feeds/new",
+		"params":{
+			"site":null,
+			"path":"/test.xml",
+			"template_path":"/generic-mrss-2_0.xml",
+			"title":"title",
+			"description":"description",
+			"link":"http://www.omniupdate.com/",
+			"max_items":"15",
+			"publish_date":"[auto]"
+		},
+		"type":"post",
+		"response":[]
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"access_denied":{
+		"code":"400",
+		"response":{
+			"error":"You do not have the proper permissions to access this directory.",
+			"code": "ACCESS_DENIED"
+			}
+		},
+	"unauthorized":{
+		"code":"403",
+		"response":{
+			"error":"You do not have the proper privileges to perform this action.",
+			"code":"ACCESS_DENIED"
+			}
+		},
+	"forbidden":{
+		"code":"403",
+		"response":{
+			"error":"You do not have Super Admin privileges to perform this action.",
+			"code":"ACCESS_DENIED"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"new":{
+		"path":"/groups/new",
+		"params":{
+			"account":null,
+			"name":"required",
+			"user":[]
+		},
+		"type":"post",
+		"response":[]
+	}
+}

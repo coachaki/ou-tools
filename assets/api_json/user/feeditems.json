@@ -1,0 +1,17 @@
+{
+	"new":{
+		"path":"/feeditems/new",
+		"params":{
+			"site":null,
+			"title":"",
+			"description":"",
+			"link":"[auto]",
+			"author":"automation",
+			"extra":"",
+			"path":"required",
+			"publish_date":"[auto]"
+			},
+		"response":[],
+		"type":"post"
+	}
+}

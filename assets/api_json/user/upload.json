@@ -1,0 +1,31 @@
+{
+	"html":{
+		"path":"/files/upload", 
+		"params":{"path":"/","overwrite":"false","access":"Everyone"},
+		"file":{"path":null,"name":null,"type":"text"},
+		"response":[]
+		},
+	"binary":{
+		"path":"/files/upload",
+		"params":{"path":"/","overwrite":"false","access":"Everyone"},
+		"file":{"path":null,"name":null,"type":"text"},
+		"response":[]
+		},
+	"gallery":{
+		"path":"/assets/add_image",
+		"params":{
+			"site":null,
+			"asset":"required",
+			"image":"name_does_not_matter.JPG",
+			"thumb_width":"100",
+			"thumb_height":"100"
+		},
+		"file":{
+			"path":"required",
+			"name":"default",
+			"type":"img"
+		},
+		"response":[]
+		},
+	}
+}

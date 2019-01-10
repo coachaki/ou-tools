@@ -43,3 +43,8 @@ function getParams(params) {
   console.log(output);
   return output;
 }
+
+function newAsset(params) {
+  const endpoint = '/assets/new';
+  const method = 'post';
+}

@@ -1,0 +1,28 @@
+{
+	"new":{
+		"path":"/users/new",
+		"params":{
+			"account":"required",
+			"username":"required",
+			"password":"required",
+			"first_name":"",
+			"last_name":"",
+			"phone":"",
+			"email":"",
+			"time_zone":"",
+			"locale":"",
+			"privilege":"10",
+			"toolbar":"",
+			"dictionary_add":"true",
+			"ldap_auth":"0",
+			"ldap_host":"",
+			"ldap_dn":"",
+			"accounts":"",
+			"webdav":"false",
+			"failed_login_notification":"false",
+			"create_group":"false"
+		},
+		"type":"post"
+	}
+
+}

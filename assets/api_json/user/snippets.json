@@ -1,0 +1,24 @@
+{
+	"addcategory":{
+		"path":"/snippets/addcategory",
+		"params":{
+			"category":"snippet",
+			"site":null
+		},
+		"type":"post",
+		"response":[]
+	},
+	"addsnippet":{
+		"path":"/snippets/addsnippet",
+		"params":{
+			"name":"required",
+			"category":"required",
+			"path":"required",
+			"description":"",
+			"snippet":"required",
+			"site":null
+		},
+		"type":"post",
+		"responose":[]
+	}
+}

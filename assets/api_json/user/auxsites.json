@@ -1,0 +1,22 @@
+{
+	"new":{
+		"path":"/auxsites/new",
+		"params":{
+			"type":"0",
+			"name":"required",
+			"address":"required",
+			"ftp_type":2,
+			"username":"required",
+			"authtype":"0",
+			"password":"required",
+			"umask":"0022",
+			"ftp_root":"required",
+			"ftp_home":"",
+			"http_root":"required",
+			"available_to":"Everyone",
+			"site":null
+		},
+		"type":"post",
+		"response":[]
+	}
+}

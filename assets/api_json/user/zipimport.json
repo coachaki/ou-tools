@@ -1,0 +1,29 @@
+{
+	"upload":{
+		"path":"/zipimport/upload",
+		"params":{
+			"site":null,
+			"path":"/",
+			"overwrite":true,
+			"group":"*inherit*"
+		},
+		"file":{
+			"path":"required",
+			"name":"archive",
+			"type":"binary",
+			"content_type":"application/x-zip-compressed"
+		},
+		"type":"package",
+		"response":[]
+	},
+	"extract":{
+		"path":"/zipimport/extract",
+		"params":{
+			"key":"required",
+			"site":null,
+			"ignore_root":false
+		},
+		"type":"post",
+		"response":[]
+	}
+}
