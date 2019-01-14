@@ -2,7 +2,9 @@ const api = {
   config: {},
   user: {},
   permissions: {},
-  get: (endpoint, params) => this.query(endpoint, params, 'get'),
+  get(endpoint, params) {
+    return this.query(endpoint, params, 'get');
+  },
   post(endpoint, params) {
     return this.query(endpoint, params, 'post');
   },
