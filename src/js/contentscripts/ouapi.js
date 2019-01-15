@@ -23,24 +23,29 @@ const ouapi = {
     return fetch(endpoint, qInit);
   },
   whoami(_site) {
-    return new Promise(() => {
+    return new Promise((resolve, reject) => {
       this.get('/authentication/whoami')
-        .then(response => response.json())
-        .then((data) => {
-          this.config = {
-            account: data.account,
-            skin: data.skin,
-          };
-          this.getSite(_site);
-          this.user = data.user;
-          this.permissions = data.permissions;
+        .then((response) => {
+          if (!response.ok) {
+            reject(new Error('whoami call failed.'));
+          }
+          return response.json();
         })
+        .then((whoamiData) => {
+          this.config = {
+            account: whoamiData.account,
+            skin: whoamiData.skin,
+          };
+          this.user = whoamiData.user;
+          this.permissions = whoamiData.permissions;
+        })
+        .then(() => this.getSite(_site))
         .then(() => {
           this.get('/sites/list', this.config)
             .then(response => response.json())
-            .then((data) => {
-              this.sites = data;
-              Promise.resolve();
+            .then((siteList) => {
+              this.sites = siteList;
+              resolve(siteList);
             });
         });
     });
@@ -50,19 +55,19 @@ const ouapi = {
       return this.whoami(_site);
     }
     const { hash } = window.location;
-    const pattern = new RegExp('^#([^/]*)/([^/]*)/([^/]*)/'); // skin, account, site
+    const pattern = new RegExp('^#([^/]*)/([^/]*)/([^/]*)'); // skin, account, site
     const site = _site || pattern.exec(hash)[3];
-    return new Promise(() => {
+    return new Promise((resolve, reject) => {
       this.get('/sites/view', { site }).then((response) => {
         if (response.ok !== true) {
           this.site = null;
           this.config.site = null;
-          Promise.reject(new Error('error'));
+          reject(new Error('Site parsing from the URL failed.'));
         } else {
           response.json().then((siteData) => {
             this.site = siteData;
             this.config.site = site;
-            Promise.resolve();
+            resolve(siteData);
           });
         }
       });
