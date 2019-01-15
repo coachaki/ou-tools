@@ -13,7 +13,7 @@
     {
       "matches": ["http://*.cms.omniupdate.com/*", "https://*.cms.omniupdate.com/*"],
       "include_globs": ["*.cms.omniupdate.com/10/*"],
-      "js": ["js/contentscripts/ouapi.js", "js/contentscripts/contentscript.js"]
+      "js": ["js/contentscripts/ouapi.js", "js/contentscripts/documentation.js", "js/contentscripts/contentscript.js"]
     }
   ],
   "icons": {
