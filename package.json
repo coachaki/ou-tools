@@ -18,6 +18,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^4.0.1",
     "grunt-eslint": "^21.0.0",
+    "gulp": "^4.0.2",
     "mocha": "^5.2.0",
     "web-ext": "^3.0.0"
   },
