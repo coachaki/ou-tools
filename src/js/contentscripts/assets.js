@@ -20,13 +20,13 @@ if (typeof ouapi === 'object') {
     },
     newFormEmail(fromEmail = 'form@omniupdate.com') {
       const postData = {
-        name: `(zz-dev) Email Form ${Math.random()}`,
+        name: `(zz-dev) Form ${Math.floor(Math.random() * 10000)} - Email Test`,
         type: 4,
         description: 'A form to test email creation',
         site_locked: true,
         use_database: true,
-        group: null,
-        readers: null,
+        group: '',
+        readers: '',
         pass_message: 'Success!',
         fail_message: 'Fail.',
         elements: [
@@ -57,13 +57,13 @@ if (typeof ouapi === 'object') {
     },
     newFormAll() {
       const postData = {
-        name: `(zz-dev) Email Form ${Math.floor(Math.random() * 10000)}`,
+        name: `(zz-dev) Form ${Math.floor(Math.random() * 10000)} - All Elements`,
         type: 4,
         description: 'A form to test email creation',
         site_locked: true,
         use_database: true,
-        group: null,
-        readers: null,
+        group: '',
+        readers: '',
         pass_message: 'Success!',
         fail_message: 'Fail.',
         elements: [

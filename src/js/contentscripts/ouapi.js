@@ -1,3 +1,4 @@
+/* eslint-disable-next-line no-unused-vars */
 const ouapi = {
   config: {},
   site: {},
@@ -12,9 +13,22 @@ const ouapi = {
     return this.query(`${endpoint}?${urlParams.toString()}`);
   },
   post(endpoint, params) {
+    const urlParams = new URLSearchParams();
     const allParams = Object.assign({}, this.config, params);
+    Object.keys(allParams).forEach((key) => {
+      if (Array.isArray(allParams[key])) {
+        urlParams.set(key, JSON.stringify(allParams[key]));
+      } else {
+        urlParams.set(key, allParams[key]);
+      }
+    });
 
-    return this.query(endpoint, 'post', { body: allParams });
+    return this.query(endpoint, 'post', {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      },
+      body: urlParams.toString(),
+    });
   },
   query(endpoint, method = 'get', init = {}) {
     const defaultInit = { method, credentials: 'same-origin' };
@@ -74,3 +88,5 @@ const ouapi = {
     });
   },
 };
+
+ouapi.getSite();
