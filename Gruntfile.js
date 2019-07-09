@@ -28,7 +28,13 @@ module.exports = (grunt) => {
           {
             expand: true,
             cwd: 'src/',
-            src: ['**'],
+            src: ['*', 'css/*', 'js/**'],
+            dest: 'build/',
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: ['shells/webextension/*'],
             dest: 'build/',
           },
         ],

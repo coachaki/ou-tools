@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2, // this must be version 2
+  "name": "OU Devtools",
+  "version": "0.0.1", // big-features.small-features.bugfixes
+  "description": "Tools for doing mundane tasks inside OU Campus.",
+  "author": "Aki Y",
+
+  "permissions": ["<all_urls>"],
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "icons": {
+    "16": "img/icons/ou-tools-16.png",
+    "32": "img/icons/ou-tools-32.png",
+    "48": "img/icons/ou-tools-48.png",
+    "128": "img/icons/ou-tools-128.png"
+  },
+  "devtools_page": "main.html"
+}
