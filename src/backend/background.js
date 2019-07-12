@@ -1,3 +1,8 @@
+/* global browser */
+
+console.log('background script');
+console.log(browser);
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
     const rule1 = {

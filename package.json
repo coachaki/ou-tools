@@ -23,7 +23,8 @@
     "web-ext": "^3.1.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start:firefox": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition --start-url https://a.cms.omniupdate.com/admin/#testdrives -p dev-edition-default"
   },
   "repository": {
     "type": "git",
