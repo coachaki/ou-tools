@@ -1,0 +1,40 @@
+:root {
+  --theme-body-background: #14171a;
+  --theme-sidebar-background: #181d20;
+  --theme-contrast-background: #b28025;
+  --theme-main-background: #333333;
+
+  --theme-body-color: #8fa1b2;
+  --theme-body-color-alt: #b6babf;
+  --theme-content-color1: #a9bacb;
+  --theme-content-color2: #8fa1b2;
+  --theme-content-color3: #667380;
+}
+
+html {
+  background-color: var(--theme-body-background);
+  color: var(--theme-body-color);
+  display: grid;
+  grid-template-areas:
+  "header header"
+  "sidenav main"
+  "footer footer";
+}
+
+header.main {
+  grid-area: header;
+}
+
+footer.main {
+  grid-area: footer;
+}
+
+main {
+  grid-area: main;
+  background-color: var(--theme-main-background);
+}
+
+nav.main {
+  grid-area: sidenav;
+  background-color: var(--theme-sidebar-background);
+}

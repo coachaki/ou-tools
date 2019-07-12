@@ -5,7 +5,7 @@
   "description": "Tools for doing mundane tasks inside OU Campus.",
   "author": "Aki Y",
 
-  "permissions": ["<all_urls>"],
+  "permissions": ["<all_urls>", "webRequest", "webRequestBlocking"],
   "background": {
     "scripts": ["js/background.js"]
   },
