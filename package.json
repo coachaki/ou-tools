@@ -23,7 +23,8 @@
     "web-ext": "^3.1.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start:firefox": "web-ext run --source-dir ./build/ --firefox=firefoxdeveloperedition"
   },
   "repository": {
     "type": "git",
