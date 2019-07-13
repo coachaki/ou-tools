@@ -28,7 +28,7 @@ module.exports = (grunt) => {
           {
             expand: true,
             cwd: 'src/',
-            src: ['panel/*'],
+            src: ['panel/*', 'backend/**'],
             dest: 'build/',
           },
           {

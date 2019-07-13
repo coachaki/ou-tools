@@ -14,9 +14,20 @@ function handleHidden() {
 /**
 Create a panel, and add listeners for panel show/hide events.
 */
-browser.devtools.panels
-  .create('OU Campus', '/img/icons/ou-tools-48.png', '/panel/panel.html')
-  .then((newPanel) => {
-    newPanel.onShown.addListener(handleShown);
-    newPanel.onHidden.addListener(handleHidden);
-  });
+
+browser.devtools.inspectedWindow.eval('typeof OU != "undefined"').then((result) => {
+  if (result[0] !== undefined) {
+    const isOU = result[0];
+    if (!isOU) {
+      console.log('isOU', isOU);
+      return;
+    }
+
+    browser.devtools.panels
+      .create('OU Campus', '/img/icons/ou-tools-48.png', '/panel/panel.html')
+      .then((newPanel) => {
+        newPanel.onShown.addListener(handleShown);
+        newPanel.onHidden.addListener(handleHidden);
+      });
+  }
+});

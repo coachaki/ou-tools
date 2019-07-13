@@ -4,10 +4,9 @@
   "version": "0.0.1", // big-features.small-features.bugfixes
   "description": "Tools for doing mundane tasks inside OU Campus.",
   "author": "Aki Y",
-
-  "permissions": ["<all_urls>", "webRequest", "webRequestBlocking"],
+  "permissions": ["activeTab", "<all_urls>"],
   "background": {
-    "scripts": ["js/background.js"]
+    "scripts": ["backend/background.js"]
   },
   "icons": {
     "16": "img/icons/ou-tools-16.png",
