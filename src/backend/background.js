@@ -3,49 +3,29 @@ console.log(browser.tabs);
 
 const ports = {};
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
-    const rule1 = {
-      conditions: [
-        new chrome.declarativeContent.PageStateMatcher({
-          pageUrl: { hostEquals: 'a.cms.omniupdate.com' },
-        }),
-        new chrome.declarativeContent.PageStateMatcher({
-          css: ['a#nav-help[href*=oucampus10]', 'a.brand[href*="/10/"]'], // check for a link to the support site and a link to v10 ou campus for non-sass instances
-        }),
-      ],
-      actions: [new chrome.declarativeContent.ShowPageAction()],
-    };
-    chrome.declarativeContent.onPageChanged.addRules([rule1]);
-  });
-
-  console.log('background script');
-});
-
-browser.runtime.onMessage.addListener((message) => {
-  console.log(message);
-
-  const action = browser.tabs.get(message.tabId);
-
-  action.then(tabInfo => console.log(tabInfo), error => console.log(error));
-});
-
 browser.runtime.onConnect.addListener((port) => {
-  console.log(port);
-  port.postMessage({ type: 'get', callback: 'getInspectedTabId' });
+  ports[port.name] = { port };
+  console.log(ports);
 
-  port.onMessage.addListener((message) => {
-    switch (message.type) {
-      case 'set': {
-        console.log(message);
-        if (message.name === 'tabId') {
-          ports[message.data] = port;
-          console.log(ports);
-        }
-        break;
-      }
-      default:
-        break;
-    }
-  });
+  if (port.name.indexOf('paneljs') === 0) {
+    addDevPanelHandler(port);
+  }
 });
+
+function addDevPanelHandler(port) {
+  port.onMessage.addListener((message) => {
+    const { api, method, argv } = message;
+    const apiCall = browser[api][method](...argv);
+    apiCall.then((response) => {
+      console.log(response);
+      port.postMessage({ method: `${api}.${method}`, response });
+    });
+  });
+
+  port.onDisconnect.addListener((port) => {
+    console.log('disconnecting');
+    console.log(port);
+    delete ports[port.name];
+    console.log(ports);
+  });
+}
