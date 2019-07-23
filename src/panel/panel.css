@@ -17,6 +17,7 @@ body {
   height: 100%;
   background-color: var(--theme-body-background);
   color: var(--theme-body-color);
+  font-family: 'Fira Sans', sans-serif;
 }
 
 body {
