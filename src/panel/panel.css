@@ -2,7 +2,7 @@
   --theme-body-background: #14171a;
   --theme-sidebar-background: #181d20;
   --theme-contrast-background: #b28025;
-  --theme-main-background: #333333;
+  --theme-banner-background: #222222;
 
   --theme-body-color: #8fa1b2;
   --theme-body-color-alt: #b6babf;
@@ -20,28 +20,21 @@ body {
 }
 
 body {
-  margin: 0;
-  padding: 0;
   display: grid;
   grid-template-columns: 300px 1fr;
-  grid-template-rows: 100px auto 100px;
+  grid-template-rows: 100px auto;
   grid-template-areas:
     'header header'
-    'sidenav main'
-    'footer footer';
+    'sidenav main';
 }
 
 body > header {
   grid-area: header;
-}
-
-body > footer {
-  grid-area: footer;
+  background-color: var(--theme-banner-background);
 }
 
 body > main {
   grid-area: main;
-  background-color: var(--theme-body-background);
 }
 
 body > nav {
