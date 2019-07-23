@@ -11,13 +11,20 @@
   --theme-content-color3: #667380;
 }
 
-html {
+html,
+body {
   width: 100%;
   height: 100%;
   background-color: var(--theme-body-background);
   color: var(--theme-body-color);
+}
+
+body {
+  margin: 0;
+  padding: 0;
   display: grid;
   grid-template-columns: 300px 1fr;
+  grid-template-rows: 100px auto 100px;
   grid-template-areas:
     'header header'
     'sidenav main'
@@ -34,10 +41,16 @@ body > footer {
 
 body > main {
   grid-area: main;
-  background-color: var(--theme-main-background);
+  background-color: var(--theme-body-background);
 }
 
 body > nav {
   grid-area: sidenav;
   background-color: var(--theme-sidebar-background);
+}
+
+body > header,
+body > footer,
+body > main {
+  padding: 0.2em 1em;
 }
