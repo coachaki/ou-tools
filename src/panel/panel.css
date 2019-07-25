@@ -9,6 +9,8 @@
   --theme-content-color1: #a9bacb;
   --theme-content-color2: #8fa1b2;
   --theme-content-color3: #667380;
+
+  box-sizing: border-box;
 }
 
 html,
@@ -30,6 +32,7 @@ body {
 }
 
 body > header {
+  padding: 0.2em 1em;
   grid-area: header;
   background-color: var(--theme-banner-background);
 }
@@ -43,8 +46,53 @@ body > nav {
   background-color: var(--theme-sidebar-background);
 }
 
-body > header,
-body > footer,
-body > main {
-  padding: 0.2em 1em;
+ul.tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.tabs li > a {
+  padding: 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--theme-body-color-alt);
+  transition: padding 200ms ease-in;
+}
+
+ul.tabs.vertical li > a {
+  display: block;
+}
+ul.tabs.vertical li > a:hover,
+ul.tabs.vertical li > a:focus {
+  box-shadow: 0 0 3px 1px var(--theme-content-color1);
+  padding-left: 40px;
+  padding-right: 0px;
+  transition: padding 300ms ease-out;
+}
+
+ul.tabs.vertical li > a.active {
+  padding-left: 30px;
+  padding-right: 10px;
+  transition: padding 100ms;
+}
+
+main > section.tab {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+section.tab {
+  display: none;
+  padding: 20px;
+}
+
+section.tab > *:first-child {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+section.tab.active {
+  display: block;
 }

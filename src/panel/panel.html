@@ -12,13 +12,41 @@
   <body>
     <header><h1>OU Campus Dev Tools</h1></header>
     <nav>
-      <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
+      <ul class="tabs vertical">
+        <li><a href="#tab1" class="active">Create an Admin Account</a></li>
+        <li><a href="#tab2">Tab 2</a></li>
+        <li><a href="#tab3">Tab 3</a></li>
+        <li><a href="#tab4">Tab 4</a></li>
+        <li><a href="#tab5">Tab 5</a></li>
+        <li><a href="#tab6">Tab 6</a></li>
+        <li><a href="#tab7">Tab 7</a></li>
+        <li><a href="#tab8">Tab 8</a></li>
       </ul>
     </nav>
-    <main><p>Main Content</p></main>
+    <main>
+      <section class="tab active" id="tab1">
+        <h2>Create an Admin Account</h2>
+        <form action="create-user">
+          <input type="hidden" name="level" value="10">
+          <input type="hidden" name="webdav" value="true">
+          <label for=""></label>
+          <input type="text">
+          <label for=""></label>
+          <input type="text">
+          <label for=""></label>
+          <input type="text">
+          <label for=""></label>
+          <input type="text">
+        </form>
+      </section>
+      <section class="tab" id="tab2">Tab 2</section>
+      <section class="tab" id="tab3">Tab 3</section>
+      <section class="tab" id="tab4">Tab 4</section>
+      <section class="tab" id="tab5">Tab 5</section>
+      <section class="tab" id="tab6">Tab 6</section>
+      <section class="tab" id="tab7">Tab 7</section>
+      <section class="tab" id="tab8">Tab 8</section>
+    </main>
     <script src="panel.js"></script>
   </body>
 </html>
