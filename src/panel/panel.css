@@ -71,10 +71,18 @@ ul.tabs.vertical li > a:focus {
   transition: padding 300ms ease-out;
 }
 
-ul.tabs.vertical li > a.active {
-  padding-left: 30px;
+ul.tabs.vertical li.active > a,
+ul.tabs.vertical li.active > a:hover,
+ul.tabs.vertical li.active > a:focus {
+  padding-left: 20px;
   padding-right: 10px;
   transition: padding 100ms;
+  box-shadow: none;
+  cursor: default;
+}
+
+ul.tabs.vertical li.active {
+  border-left: 10px solid cyan;
 }
 
 main > section.tab {
@@ -95,4 +103,26 @@ section.tab > *:first-child {
 
 section.tab.active {
   display: block;
+}
+
+section.tab form {
+  width: 600px;
+  display: grid;
+  row-gap: .6rem;
+}
+
+section.tab form .input-group {
+  display: grid;
+  grid-template-columns: auto 2fr;
+  column-gap: .6rem;
+  font-size: 1.1rem;
+}
+
+section.tab form .input-group > label {
+  grid-column: 1;
+  line-height: 2;
+}
+
+section.tab form > label + input {
+  grid-column: 2;
 }

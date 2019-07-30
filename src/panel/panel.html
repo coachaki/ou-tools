@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>OU Campus</title>
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap"
+      rel="stylesheet"
+    />
     <link href="normalize.css" type="text/css" rel="stylesheet" />
     <link href="panel.css" type="text/css" rel="stylesheet" />
   </head>
@@ -13,7 +16,7 @@
     <header><h1>OU Campus Dev Tools</h1></header>
     <nav>
       <ul class="tabs vertical">
-        <li><a href="#tab1" class="active">Create an Admin Account</a></li>
+        <li class="active"><a href="#tab1">Create an Admin Account</a></li>
         <li><a href="#tab2">Tab 2</a></li>
         <li><a href="#tab3">Tab 3</a></li>
         <li><a href="#tab4">Tab 4</a></li>
@@ -27,16 +30,24 @@
       <section class="tab active" id="tab1">
         <h2>Create an Admin Account</h2>
         <form action="create-user">
-          <input type="hidden" name="level" value="10">
-          <input type="hidden" name="webdav" value="true">
-          <label for=""></label>
-          <input type="text">
-          <label for=""></label>
-          <input type="text">
-          <label for=""></label>
-          <input type="text">
-          <label for=""></label>
-          <input type="text">
+          <input type="hidden" name="level" value="10" />
+          <input type="hidden" name="webdav" value="true" />
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" />
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" />
+          </div>
+          <div class="input-group">
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" />
+          </div>
+          <div class="input-group">
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" />
+          </div>
         </form>
       </section>
       <section class="tab" id="tab2">Tab 2</section>
