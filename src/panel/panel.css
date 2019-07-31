@@ -32,9 +32,38 @@ body {
 }
 
 body > header {
-  padding: 0.2em 1em;
+  padding: 0 1em;
   grid-area: header;
   background-color: var(--theme-banner-background);
+  display: flex;
+}
+
+body > header .brand {
+  margin-right: 2.5em;
+}
+
+body > header .info {
+  display: flex
+}
+
+body > header .actions {
+  margin-left: auto;
+  padding-top: 2em;
+}
+
+dl.horizontal {
+  display: grid;
+  grid-column-gap: .7em;
+  line-height: 2;
+}
+
+dl.horizontal dt {
+  grid-row: 1;
+  font-weight: bold;
+}
+
+dl.horizontal dd {
+  grid-row: 2;
 }
 
 body > main {
@@ -86,8 +115,6 @@ ul.tabs.vertical li.active {
 }
 
 main > section.tab {
-  width: 100%;
-  height: 100%;
   margin: 0;
 }
 
@@ -111,9 +138,13 @@ section.tab form {
   row-gap: .6rem;
 }
 
+section.tab form input:not([type=submit]) {
+  padding: 0 .36em;
+}
+
 section.tab form .input-group {
   display: grid;
-  grid-template-columns: auto 2fr;
+  grid-template-columns: 1fr 3fr;
   column-gap: .6rem;
   font-size: 1.1rem;
 }
@@ -123,6 +154,11 @@ section.tab form .input-group > label {
   line-height: 2;
 }
 
-section.tab form > label + input {
+section.tab form .input-group > label + input {
   grid-column: 2;
+}
+
+.button {
+  padding: 0 .36em;
+  line-height: 2;
 }
