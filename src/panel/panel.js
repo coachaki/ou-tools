@@ -23,6 +23,16 @@ const panel = {
   getSite(url) {
     return url.substr(url.indexOf('#')).split('/')[2];
   },
+  async createUser(data) {
+    data.set('account', ouc.me.account);
+    return fetch(`${ouc.me.apihost}/users/new`, {
+      method: 'post',
+      body: data,
+    }).then(res => res.json())
+      .then((json) => {
+        console.log(json);
+      });
+  },
   async whoami() {
     return fetch(`${ouc.me.apihost}/authentication/whoami`)
       .then(res => res.json())
@@ -56,6 +66,10 @@ function addListeners() {
     document.addEventListener('submit', (ev) => {
       ev.preventDefault();
       console.log(ev);
+      const data = new FormData(ev.target);
+      const { action } = ev.dataset;
+
+      panel[action](data);
     });
   });
 }
