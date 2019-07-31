@@ -67,7 +67,7 @@ function addListeners() {
       ev.preventDefault();
       console.log(ev);
       const data = new FormData(ev.target);
-      const { action } = ev.dataset;
+      const { action } = ev.target.dataset;
 
       panel[action](data);
     });
