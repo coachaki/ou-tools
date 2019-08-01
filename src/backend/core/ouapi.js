@@ -1,10 +1,15 @@
 /* eslint-disable-next-line no-unused-vars */
 const ouapi = {
-  config: {},
+  config: {
+    apihost: '',
+    account: '',
+    skin: '',
+  },
   site: {},
   sites: [],
   user: {},
   permissions: {},
+  me: {},
   get(endpoint, params = {}) {
     const urlParams = new URLSearchParams();
     const allParams = Object.assign({}, this.config, params);
@@ -52,6 +57,7 @@ const ouapi = {
           };
           this.user = whoamiData.user;
           this.permissions = whoamiData.permissions;
+          this.me = whoamiData;
         })
         .then(() => this.getSite(_site))
         .then(() => {
@@ -89,4 +95,4 @@ const ouapi = {
   },
 };
 
-ouapi.getSite();
+export default ouapi;
