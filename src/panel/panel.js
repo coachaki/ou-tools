@@ -131,12 +131,22 @@ const panel = {
       last_name: formData.get('last_name'),
     };
     console.log(data);
-    return ouapi
-      .post('/users/new', data)
-      .then(res => res.json())
-      .then((json) => {
-        console.log(json);
-      });
+    const newUser = ouapi.post('/users/new', data);
+    newUser.then(() => {
+      ouapi.get('/users/view', { user: data.username })
+        .then(res => res.json())
+        .then((json) => {
+          console.log(json);
+          const div = document.getElementById('createUserResponse');
+          const webdavText = document.createElement('textarea');
+          webdavText.innerText = json.webdav_url;
+          const passField = document.createElement('input');
+          passField.value = data.password;
+          const userField = document.createElement('input');
+          userField.value = data.username;
+          div.append(userField, passField, webdavText);
+        });
+    });
   },
 };
 
