@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>OU Campus</title>
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap"
+      rel="stylesheet"
+    />
     <link href="normalize.css" type="text/css" rel="stylesheet" />
     <link href="panel.css" type="text/css" rel="stylesheet" />
   </head>
@@ -14,8 +17,7 @@
       <div class="brand">
         <h1>OU Campus Dev Tools</h1>
       </div>
-      <div id="tabInfo" class="info">
-      </div>
+      <div id="tabInfo" class="info"></div>
       <div class="actions">
         <button id="whoami">update info</button>
       </div>
@@ -34,29 +36,31 @@
     </nav>
     <main>
       <section class="tab active" id="tab1">
-        <h2>Create an Admin Account</h2>
-        <form data-action="createUser">
-          <input type="hidden" name="privilege" value="10" />
-          <input type="hidden" name="webdav" value="true" />
-          <div class="input-group">
-            <label for="username">Username</label>
-            <input required type="text" id="username" name="username" />
-          </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input required type="password" id="password" name="password" />
-          </div>
-          <div class="input-group">
-            <label for="first_name">First Name</label>
-            <input type="text" id="first_name" name="first_name" />
-          </div>
-          <div class="input-group">
-            <label for="last_name">Last Name</label>
-            <input type="text" id="last_name" name="last_name" />
-          </div>
-          <input class="button" type="submit" value="Create User" />
-        </form>
-        <div id="createUserResponse"></div>
+        <div class="container">
+          <h2>Create an Admin Account</h2>
+          <form data-action="createUser">
+            <input type="hidden" name="privilege" value="10" />
+            <input type="hidden" name="webdav" value="true" />
+            <div class="input-group">
+              <label for="username">Username</label>
+              <input required type="text" id="username" name="username" />
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input required type="password" id="password" name="password" />
+            </div>
+            <div class="input-group">
+              <label for="first_name">First Name</label>
+              <input type="text" id="first_name" name="first_name" />
+            </div>
+            <div class="input-group">
+              <label for="last_name">Last Name</label>
+              <input type="text" id="last_name" name="last_name" />
+            </div>
+            <input class="button" type="submit" value="Create User" />
+          </form>
+          <div id="createUserResponse" class="response"></div>
+        </div>
       </section>
       <section class="tab" id="tab2">Tab 2</section>
       <section class="tab" id="tab3">Tab 3</section>

@@ -138,13 +138,17 @@ const panel = {
         .then((json) => {
           console.log(json);
           const div = document.getElementById('createUserResponse');
+          const newDiv = document.createElement('div');
+          newDiv.id = 'createUserResponse';
+          newDiv.classList = ['response'];
           const webdavText = document.createElement('textarea');
           webdavText.innerText = json.webdav_url;
           const passField = document.createElement('input');
           passField.value = data.password;
           const userField = document.createElement('input');
           userField.value = data.username;
-          div.append(userField, passField, webdavText);
+          newDiv.append(userField, passField, webdavText);
+          div.replaceWith(newDiv);
         });
     });
   },

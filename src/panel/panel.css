@@ -132,8 +132,11 @@ section.tab.active {
   display: block;
 }
 
+section.tab > .container {
+  width: 800px;
+}
+
 section.tab form {
-  width: 600px;
   display: grid;
   row-gap: .6rem;
 }
@@ -161,4 +164,13 @@ section.tab form .input-group > label + input {
 .button {
   padding: 0 .36em;
   line-height: 2;
+}
+
+.response {
+  display: flex;
+  flex-direction: column;
+}
+
+.response > * {
+  padding: .4em .6em;
 }
