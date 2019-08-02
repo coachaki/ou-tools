@@ -1,3 +1,5 @@
+/* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
+
 const { inspectedWindow } = browser.devtools;
 const browserData = {};
 const bgScript = browser.runtime.connect({ name: `paneljs${inspectedWindow.tabId}` });
@@ -100,9 +102,35 @@ const panel = {
   async getTabInfo() {
     bgScript.postMessage({ api: 'tabs', method: 'get', argv: [1] });
   },
-  makeDivList(data, classList) {
-    const div = document.createElement('div');
-    div.classList = classList;
+  generatePassword(length) {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678901234567890123456789!$/%@#!$/%@#!$/%@#';
+    let password = '';
+    for (let i = 0; i < length; i++) {
+      const r = Math.floor(Math.random() * chars.length);
+      password += chars.charAt(r);
+    }
+    return password;
+  },
+  outputError(error, custom = '') {
+    const responseDiv = document.getElementById('response');
+    const message = document.createElement('p');
+    message.innerText = `Error: ${error}`;
+    responseDiv.append(message);
+
+    if (custom.length > 0) {
+      const customP = document.createElement('p');
+      customP.innerText = custom;
+      responseDiv.append(customP);
+    }
+  },
+  outputResponse(messages) {
+    const responseDiv = document.getElementById('response');
+    const lines = messages.map((message) => {
+      const p = document.createElement('p');
+      p.innerText = message;
+      return p;
+    });
+    responseDiv.append(...lines);
   },
   makeInfoList() {
     const dl = document.createElement('dl');
@@ -126,44 +154,78 @@ const panel = {
     return url.substr(url.indexOf('#')).split('/')[2];
   },
   async createUser(formData) {
+    const randomPassword = this.generatePassword(20);
     const data = {
       privilege: Number(formData.get('privilege')),
       webdav: formData.get('webdav') === 'true',
       username: formData.get('username'),
-      password: formData.get('password'),
+      password: formData.get('password') || randomPassword,
       first_name: formData.get('first_name'),
       last_name: formData.get('last_name'),
     };
     const newUser = ouapi.post('/users/new', data);
     newUser
       .then(res => res.json())
-      .then((response) => {
-        if (response.error) {
-          const responseDiv = document.getElementById('response');
-          responseDiv.classList.remove('success');
-          responseDiv.classList.add('error');
-          const message = document.createElement('p');
-          message.innerText = response.error;
-          responseDiv.innerHTML = '';
-          responseDiv.append(message);
-        } else {
-          ouapi
-            .get('/users/view', { user: data.username })
-            .then(res => res.json())
-            .then((json) => {
-              const responseDiv = document.getElementById('response');
-              responseDiv.classList.remove('error');
-              responseDiv.classList.add('success');
-              const webdavText = document.createElement('textarea');
-              webdavText.innerText = json.webdav_url;
-              const passField = document.createElement('input');
-              passField.value = data.password;
-              const userField = document.createElement('input');
-              userField.value = data.username;
-              responseDiv.innerHTML = '';
-              responseDiv.append(userField, passField, webdavText);
-            });
+      .then((createResponse) => {
+        if (createResponse.error) {
+          this.outputError(createResponse.error, `>> The provided username: ${data.username}`);
+          return;
         }
+
+        ouapi
+          .get('/users/view', { user: data.username })
+          .then(res => res.json())
+          .then((newUserData) => {
+            const messages = [
+              'Success: User created.',
+              `>> Login credentials: ${data.username}:${data.password}`,
+              `>> WebDav URL: ${newUserData.webdav_url}`,
+            ];
+            this.outputResponse(messages);
+          });
+      });
+  },
+  async newFormEmail(formData) {
+    const fromEmail = formData.get('fromEmail') || 'from@omniupdate.com';
+    const apiCall = ouapi.assets.newFormEmail(fromEmail);
+    apiCall
+      .then(res => res.json())
+      .then((json) => {
+        if (json.error) {
+          this.outputError(json.error, '>> Not sure why it failed.');
+          return;
+        }
+
+        ouapi.assets
+          .get(json.asset)
+          .then(res => res.json())
+          .then((newAssetData) => {
+            const messages = [
+              'Success: Asset created.',
+              `>> Asset name: ${newAssetData.name}`,
+              `>> From email: ${fromEmail}`,
+            ];
+            this.outputResponse(messages);
+          });
+      });
+  },
+  async newFormAll() {
+    const apiCall = ouapi.assets.newFormAll();
+    apiCall
+      .then(res => res.json())
+      .then((json) => {
+        if (json.error) {
+          this.outputError(json.error, '>> Not sure why it failed.');
+          return;
+        }
+
+        ouapi.assets
+          .get(json.asset)
+          .then(res => res.json())
+          .then((newAssetData) => {
+            const messages = ['Success: Asset created.', `>> Asset name: ${newAssetData.name}`];
+            this.outputResponse(messages);
+          });
       });
   },
 };
@@ -187,7 +249,6 @@ function makeTabs(doc) {
     const tabId = href.substring(href.indexOf('#') + 1);
     a.parentElement.classList.add('active');
     doc.getElementById(tabId).classList.add('active');
-    doc.getElementById('response').innerHTML = ''; // eslint-disable-line no-param-reassign
   };
 
   Array.from(doc.getElementsByClassName('tabs')).forEach((ul) => {

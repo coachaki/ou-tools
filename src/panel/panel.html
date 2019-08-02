@@ -46,7 +46,7 @@
           </div>
           <div class="input-group">
             <label for="password">Password</label>
-            <input required type="text" id="password" name="password" />
+            <input type="text" id="password" name="password" placeholder="Leave the field blank to use an auto-generated random password."/>
           </div>
           <div class="input-group">
             <label for="first_name">First Name</label>
@@ -56,11 +56,24 @@
             <label for="last_name">Last Name</label>
             <input type="text" id="last_name" name="last_name" />
           </div>
-          <input class="button" type="submit" name="new" value="Create User" />
+          <input class="button" type="submit" value="Create User" />
         </form>
         <div id="createUserResponse" class="response"></div>
       </section>
-      <section class="tab" id="tab2">Tab 2</section>
+      <section class="tab" id="tab2">
+        <h2>Create an Email Test Form</h2>
+        <form data-action="newFormEmail">
+          <div class="input-group">
+            <label for="fromEmail">From Email</label>
+            <input type="email" id="fromEmail" name="fromEmail" placeholder="from@omniupdate.com"/>
+          </div>
+          <input class="button" type="submit" value="New Email Test Form" />
+        </form>
+        <h2>Create a Form with All Elements</h2>
+        <form data-action="newFormAll">
+          <input class="button" type="submit" value="New Comprehensive Test Form" />
+        </form>
+      </section>
       <section class="tab" id="tab3">Tab 3</section>
       <section class="tab" id="tab4">Tab 4</section>
       <section class="tab" id="tab5">Tab 5</section>
@@ -70,5 +83,6 @@
     </main>
     <aside id="response" class="response"></aside>
     <script src="panel.js"></script>
+    <script src="../backend/contentscripts/assets.js"></script>
   </body>
 </html>

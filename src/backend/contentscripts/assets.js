@@ -9,14 +9,14 @@ if (typeof ouapi === 'object') {
       });
     },
     get(asset) {
-      return ouapi.get('/assets/view', { asset }).then(response => response);
+      return ouapi.get('/assets/view', { asset });
     },
     new(params = { name: `New Asset ${Math.floor(Math.random() * 10000)}`, type: 0 }) {
-      return ouapi.post('/assets/new', params).then(response => response);
+      return ouapi.post('/assets/new', params);
     },
     newForm(params = {}) {
       const postData = Object.assign({}, params, { type: 4, site_locked: true });
-      return ouapi.post('/assets/new', postData).then(response => response);
+      return ouapi.post('/assets/new', postData);
     },
     newFormEmail(fromEmail = 'form@omniupdate.com') {
       const postData = {
@@ -53,7 +53,7 @@ if (typeof ouapi === 'object') {
           },
         ],
       };
-      return ouapi.post('/assets/new', postData).then(response => response);
+      return ouapi.post('/assets/new', postData);
     },
     newFormAll() {
       const postData = {
@@ -190,7 +190,7 @@ if (typeof ouapi === 'object') {
         ],
         submit_text: 'Custom Submit',
       };
-      return ouapi.post('/assets/new', postData).then(response => response);
+      return ouapi.post('/assets/new', postData);
     },
   };
 }
