@@ -1,4 +1,4 @@
-const { inspectedWindow, panels, network } = browser.devtools;
+const { inspectedWindow } = browser.devtools;
 const browserData = {};
 const bgScript = browser.runtime.connect({ name: `paneljs${inspectedWindow.tabId}` });
 
@@ -134,13 +134,11 @@ const panel = {
       first_name: formData.get('first_name'),
       last_name: formData.get('last_name'),
     };
-    console.log(data);
     const newUser = ouapi.post('/users/new', data);
     newUser
       .then(res => res.json())
       .then((response) => {
         if (response.error) {
-          console.log(response);
           const responseDiv = document.getElementById('response');
           responseDiv.classList.remove('success');
           responseDiv.classList.add('error');
@@ -149,12 +147,10 @@ const panel = {
           responseDiv.innerHTML = '';
           responseDiv.append(message);
         } else {
-          console.log(response);
           ouapi
             .get('/users/view', { user: data.username })
             .then(res => res.json())
             .then((json) => {
-              console.log(json);
               const responseDiv = document.getElementById('response');
               responseDiv.classList.remove('error');
               responseDiv.classList.add('success');
@@ -166,7 +162,6 @@ const panel = {
               userField.value = data.username;
               responseDiv.innerHTML = '';
               responseDiv.append(userField, passField, webdavText);
-              console.log(document);
             });
         }
       });
@@ -192,6 +187,7 @@ function makeTabs(doc) {
     const tabId = href.substring(href.indexOf('#') + 1);
     a.parentElement.classList.add('active');
     doc.getElementById(tabId).classList.add('active');
+    doc.getElementById('response').innerHTML = ''; // eslint-disable-line no-param-reassign
   };
 
   Array.from(doc.getElementsByClassName('tabs')).forEach((ul) => {

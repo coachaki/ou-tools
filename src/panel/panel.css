@@ -123,18 +123,18 @@ main > section.tab {
   margin: 0;
 }
 
-section.tab {
+.tab {
   display: none;
   padding: 30px 36px;
+}
+
+.tab.active {
+  display: block;
 }
 
 section.tab > *:first-child {
   padding-top: 0;
   margin-top: 0;
-}
-
-section.tab.active {
-  display: block;
 }
 
 section.tab form {
