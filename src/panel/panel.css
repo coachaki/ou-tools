@@ -24,11 +24,11 @@ body {
 
 body {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px 1000px auto;
   grid-template-rows: 100px auto;
   grid-template-areas:
-    'header header'
-    'sidenav main';
+    'header header header'
+    'sidenav main response';
 }
 
 body > header {
@@ -75,6 +75,10 @@ body > nav {
   background-color: var(--theme-sidebar-background);
 }
 
+body > aside {
+  grid-area: response;
+}
+
 ul.tabs {
   list-style: none;
   padding: 0;
@@ -105,13 +109,14 @@ ul.tabs.vertical li.active > a:hover,
 ul.tabs.vertical li.active > a:focus {
   padding-left: 20px;
   padding-right: 10px;
-  transition: padding 100ms;
+  transition: padding 300ms ease-out;
   box-shadow: none;
   cursor: default;
 }
 
 ul.tabs.vertical li.active {
   border-left: 10px solid cyan;
+  transition: border-left 300ms ease-out;
 }
 
 main > section.tab {
@@ -120,7 +125,7 @@ main > section.tab {
 
 section.tab {
   display: none;
-  padding: 20px;
+  padding: 30px 36px;
 }
 
 section.tab > *:first-child {
@@ -130,10 +135,6 @@ section.tab > *:first-child {
 
 section.tab.active {
   display: block;
-}
-
-section.tab > .container {
-  width: 800px;
 }
 
 section.tab form {
@@ -169,8 +170,9 @@ section.tab form .input-group > label + input {
 .response {
   display: flex;
   flex-direction: column;
+  padding: 2rem 2.5rem;
 }
 
-.response > * {
+.response > input, .response > textarea {
   padding: .4em .6em;
 }

@@ -100,7 +100,11 @@ const panel = {
   async getTabInfo() {
     bgScript.postMessage({ api: 'tabs', method: 'get', argv: [1] });
   },
-  getInfoList() {
+  makeDivList(data, classList) {
+    const div = document.createElement('div');
+    div.classList = classList;
+  },
+  makeInfoList() {
     const dl = document.createElement('dl');
     dl.classList = ['horizontal'];
     const outputData = {
@@ -132,27 +136,71 @@ const panel = {
     };
     console.log(data);
     const newUser = ouapi.post('/users/new', data);
-    newUser.then(() => {
-      ouapi.get('/users/view', { user: data.username })
-        .then(res => res.json())
-        .then((json) => {
-          console.log(json);
-          const div = document.getElementById('createUserResponse');
-          const newDiv = document.createElement('div');
-          newDiv.id = 'createUserResponse';
-          newDiv.classList = ['response'];
-          const webdavText = document.createElement('textarea');
-          webdavText.innerText = json.webdav_url;
-          const passField = document.createElement('input');
-          passField.value = data.password;
-          const userField = document.createElement('input');
-          userField.value = data.username;
-          newDiv.append(userField, passField, webdavText);
-          div.replaceWith(newDiv);
-        });
-    });
+    newUser
+      .then(res => res.json())
+      .then((response) => {
+        if (response.error) {
+          console.log(response);
+          const responseDiv = document.getElementById('response');
+          responseDiv.classList.remove('success');
+          responseDiv.classList.add('error');
+          const message = document.createElement('p');
+          message.innerText = response.error;
+          responseDiv.innerHTML = '';
+          responseDiv.append(message);
+        } else {
+          console.log(response);
+          ouapi
+            .get('/users/view', { user: data.username })
+            .then(res => res.json())
+            .then((json) => {
+              console.log(json);
+              const responseDiv = document.getElementById('response');
+              responseDiv.classList.remove('error');
+              responseDiv.classList.add('success');
+              const webdavText = document.createElement('textarea');
+              webdavText.innerText = json.webdav_url;
+              const passField = document.createElement('input');
+              passField.value = data.password;
+              const userField = document.createElement('input');
+              userField.value = data.username;
+              responseDiv.innerHTML = '';
+              responseDiv.append(userField, passField, webdavText);
+              console.log(document);
+            });
+        }
+      });
   },
 };
+
+function makeTabs(doc) {
+  const togglePanel = (ul, a) => {
+    if (a.parentElement.classList.contains('active')) {
+      return; // clicked on an active tab.
+    }
+
+    const activeTabs = ul.getElementsByClassName('active');
+    Array.from(activeTabs).forEach((tab) => {
+      const tabA = tab.getElementsByTagName('a')[0];
+      const href = tabA.attributes.href.value;
+      const id = href.substring(href.indexOf('#') + 1);
+      tab.classList.remove('active');
+      doc.getElementById(id).classList.remove('active');
+    });
+
+    const href = a.attributes.href.value;
+    const tabId = href.substring(href.indexOf('#') + 1);
+    a.parentElement.classList.add('active');
+    doc.getElementById(tabId).classList.add('active');
+  };
+
+  Array.from(doc.getElementsByClassName('tabs')).forEach((ul) => {
+    ul.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      togglePanel(ul, ev.target);
+    });
+  });
+}
 
 function addListeners() {
   bgScript.onMessage.addListener((m) => {
@@ -162,7 +210,7 @@ function addListeners() {
       ouapi.config.url = browserData.tab.url;
       ouapi.config.apihost = url.origin;
       ouapi.whoami().then(() => {
-        const infoList = panel.getInfoList();
+        const infoList = panel.makeInfoList();
         const div = document.createElement('div');
         div.id = 'tabInfo';
         div.append(infoList);
@@ -171,8 +219,8 @@ function addListeners() {
       });
     }
   });
-  window.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('whoami').addEventListener('click', (ev) => {
+  window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('whoami').addEventListener('click', () => {
       panel.getTabInfo();
     });
     document.addEventListener('submit', (ev) => {
@@ -183,6 +231,7 @@ function addListeners() {
 
       panel[action](data);
     });
+    makeTabs(document);
   });
 }
 
