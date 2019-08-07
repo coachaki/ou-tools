@@ -1,11 +1,12 @@
 /* eslint-disable-next-line no-unused-vars */
 const ouapi = {
   config: {
+    url: '',
     apihost: '',
     account: '',
     skin: '',
   },
-  site: {},
+  site: null,
   sites: [],
   user: {},
   permissions: {},
@@ -39,7 +40,7 @@ const ouapi = {
     const defaultInit = { method, credentials: 'same-origin' };
     const qInit = Object.assign({}, defaultInit, init);
 
-    return fetch(endpoint, qInit);
+    return fetch(this.config.apihost + endpoint, qInit);
   },
   whoami(_site) {
     return new Promise((resolve, reject) => {
@@ -51,10 +52,8 @@ const ouapi = {
           return response.json();
         })
         .then((whoamiData) => {
-          this.config = {
-            account: whoamiData.account,
-            skin: whoamiData.skin,
-          };
+          this.config.account = whoamiData.account;
+          this.config.skin = whoamiData.skin;
           this.user = whoamiData.user;
           this.permissions = whoamiData.permissions;
           this.me = whoamiData;
@@ -74,9 +73,8 @@ const ouapi = {
     if (typeof this.config.account !== 'string') {
       return this.whoami(_site);
     }
-    const { hash } = window.location;
-    const pattern = new RegExp('^#([^/]*)/([^/]*)/([^/]*)'); // skin, account, site
-    const site = _site || pattern.exec(hash)[3];
+    const { url } = this.config;
+    const site = _site || url.substr(url.indexOf('#')).split('/')[2];
     return new Promise((resolve, reject) => {
       this.get('/sites/view', { site }).then((response) => {
         if (response.ok !== true) {
@@ -94,5 +92,3 @@ const ouapi = {
     });
   },
 };
-
-export default ouapi;

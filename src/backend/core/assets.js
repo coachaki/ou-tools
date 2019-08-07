@@ -1,3 +1,4 @@
+/* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 /* global ouapi */
 
 if (typeof ouapi === 'object') {
@@ -196,7 +197,7 @@ if (typeof ouapi === 'object') {
       const postData = Object.assign({}, params, { type: 3, site_locked: true });
       return ouapi.post('/assets/new', postData);
     },
-    newSampleGallery() {
+    newSampleGallery(imagePaths = []) {
       const postData = {
         name: `(zz-dev) Gallery ${Math.floor(Math.random() * 10000)} - Dev Sample`,
         description: 'A sample gallery to showcase gallery features',
@@ -204,10 +205,80 @@ if (typeof ouapi === 'object') {
         thumbnail_height: '100',
         force_crop: 'false',
       };
-      return this.newGallery(postData);
-    },
-    addImage(filePath = '') {
 
+      this.newGallery(postData)
+        .then(res => res.json())
+        .then((json) => {
+          if (json.error) {
+            this.outputError(json.error);
+            return Promise.reject(json.error);
+          }
+          return Promise.resolve(json.asset);
+        })
+        .then(assetID => this.get(assetID))
+        .then(res => res.json())
+        .then((json) => {
+          const addImageCalls = [];
+          imagePaths.forEach((path) => {
+            addImageCalls.push(this.addImage({ filepath: path, assetData: json }));
+          });
+          console.log(addImageCalls);
+        });
+    },
+    async addImage(params = {}) {
+      const { filepath, assetData } = params;
+      const img = new Image();
+      const dataURItoBlob = (dataURI) => {
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        const regex = /^data:(\w+\/\w+);base64,([\w\W]+$)/;
+        const matches = regex.exec(dataURI);
+        if (matches !== null) {
+          const mime = matches[1];
+          const byteString = atob(matches[2]);
+
+          // write the bytes of the string to a typed array
+          const ia = new Uint8Array(byteString.length);
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+
+          return new Blob([ia], { type: mime });
+        }
+        return null;
+      };
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        context.drawImage(img, 0, 0);
+
+        const filename = filepath.split('/').pop();
+        const dataURL = canvas.toDataURL('image/jpeg');
+        const blob = dataURItoBlob(dataURL);
+        console.log(blob);
+
+        const urlParams = new URLSearchParams();
+        urlParams.set('asset', assetData.asset);
+        urlParams.set('image', filename);
+        urlParams.set('site', assetData.site);
+        urlParams.set('thumb_width', assetData.gallery.childNodes[1].childNodes[0]);
+        urlParams.set('thumb_height', assetData.gallery.childNodes[2].childNodes[0]);
+        const formData = new FormData();
+        formData.set('name', filename);
+        formData.set('file', blob, filename);
+
+        console.log(formData);
+        console.log(`${ouapi.config.apihost}/assets/add_image?${urlParams.toString()}`);
+
+        return fetch(`${ouapi.config.apihost}/assets/add_image?${urlParams.toString()}`, {
+          method: 'post',
+          body: formData,
+        });
+      };
+      img.src = filepath;
+      return img.onload;
     },
   };
 }
