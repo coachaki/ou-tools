@@ -22,7 +22,7 @@ module.exports = (grunt) => {
           },
           {
             expand: true,
-            src: ['assets/*'],
+            src: ['assets/**'],
             dest: 'build/',
           },
           {

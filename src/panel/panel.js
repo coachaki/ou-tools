@@ -99,6 +99,15 @@ const ouapi = {
 };
 
 const panel = {
+  images: [
+    '/assets/img/aircraft.jpg',
+    '/assets/img/blue-pillow.jpg',
+    '/assets/img/cactus.jpg',
+    '/assets/img/drop-of-water.jpg',
+    '/assets/img/forest.jpg',
+    '/assets/img/japanese-cherry-trees.jpg',
+    '/assets/img/lighthouse.jpg',
+  ],
   async getTabInfo() {
     bgScript.postMessage({ api: 'tabs', method: 'get', argv: [1] });
   },
@@ -226,6 +235,29 @@ const panel = {
             const messages = ['Success: Asset created.', `>> Asset name: ${newAssetData.name}`];
             this.outputResponse(messages);
           });
+      });
+  },
+  async newSampleGallery() {
+    const apiCall = ouapi.assets.newSampleGallery();
+    apiCall
+      .then(res => res.json())
+      .then((json) => {
+        if (json.error) {
+          this.outputError(json.error);
+          return;
+        }
+        console.log(json.asset);
+        const imgArray = [];
+        this.images.forEach((path) => {
+          const img = new Image();
+          img.onload = () => {
+            console.log('loaded');
+            console.log(img);
+          };
+          img.src = path;
+          imgArray.push(img);
+        });
+        console.log(imgArray);
       });
   },
 };

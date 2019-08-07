@@ -192,5 +192,22 @@ if (typeof ouapi === 'object') {
       };
       return ouapi.post('/assets/new', postData);
     },
+    newGallery(params = {}) {
+      const postData = Object.assign({}, params, { type: 3, site_locked: true });
+      return ouapi.post('/assets/new', postData);
+    },
+    newSampleGallery() {
+      const postData = {
+        name: `(zz-dev) Gallery ${Math.floor(Math.random() * 10000)} - Dev Sample`,
+        description: 'A sample gallery to showcase gallery features',
+        thumbnail_width: '100',
+        thumbnail_height: '100',
+        force_crop: 'false',
+      };
+      return this.newGallery(postData);
+    },
+    addImage(filePath = '') {
+
+    },
   };
 }
