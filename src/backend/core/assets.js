@@ -206,7 +206,7 @@ if (typeof ouapi === 'object') {
         force_crop: 'false',
       };
 
-      this.newGallery(postData)
+      const initializeGallery = this.newGallery(postData)
         .then(res => res.json())
         .then((json) => {
           if (json.error) {
@@ -218,12 +218,27 @@ if (typeof ouapi === 'object') {
         .then(assetID => this.get(assetID))
         .then(res => res.json())
         .then((json) => {
-          const addImageCalls = [];
+          const callStack = [];
           imagePaths.forEach((path) => {
-            addImageCalls.push(this.addImage({ filepath: path, assetData: json }));
+            callStack.push(this.addImage({ filepath: path, assetData: json }));
           });
-          console.log(addImageCalls);
+
+          return Promise.resolve(callStack);
         });
+
+      initializeGallery.then((calls) => {
+        Promise.all(calls).then((responses) => {
+          const array = [];
+          responses.forEach((response) => {
+            array.push(response.json()
+              .then(json => Promise.resolve(json.image)));
+          });
+
+          Promise.all(array).then((images) => {
+            console.log(images);
+          });
+        });
+      });
     },
     async addImage(params = {}) {
       const { filepath, assetData } = params;
@@ -247,38 +262,38 @@ if (typeof ouapi === 'object') {
         return null;
       };
 
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        context.drawImage(img, 0, 0);
+      // TODO: research
+      // wrapping the img.onload event listener in a promise may not be ideal
+      const promise = new Promise((resolve, reject) => {
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          context.drawImage(img, 0, 0);
 
-        const filename = filepath.split('/').pop();
-        const dataURL = canvas.toDataURL('image/jpeg');
-        const blob = dataURItoBlob(dataURL);
-        console.log(blob);
+          const filename = filepath.split('/').pop();
+          const dataURL = canvas.toDataURL('image/jpeg');
+          const blob = dataURItoBlob(dataURL);
 
-        const urlParams = new URLSearchParams();
-        urlParams.set('asset', assetData.asset);
-        urlParams.set('image', filename);
-        urlParams.set('site', assetData.site);
-        urlParams.set('thumb_width', assetData.gallery.childNodes[1].childNodes[0]);
-        urlParams.set('thumb_height', assetData.gallery.childNodes[2].childNodes[0]);
-        const formData = new FormData();
-        formData.set('name', filename);
-        formData.set('file', blob, filename);
+          const urlParams = new URLSearchParams();
+          urlParams.set('asset', assetData.asset);
+          urlParams.set('image', filename);
+          urlParams.set('site', assetData.site);
+          urlParams.set('thumb_width', assetData.gallery.childNodes[1].childNodes[0]);
+          urlParams.set('thumb_height', assetData.gallery.childNodes[2].childNodes[0]);
+          const formData = new FormData();
+          formData.set('name', filename);
+          formData.set('file', blob, filename);
 
-        console.log(formData);
-        console.log(`${ouapi.config.apihost}/assets/add_image?${urlParams.toString()}`);
-
-        return fetch(`${ouapi.config.apihost}/assets/add_image?${urlParams.toString()}`, {
-          method: 'post',
-          body: formData,
-        });
-      };
+          resolve(fetch(`${ouapi.config.apihost}/assets/add_image?${urlParams.toString()}`, {
+            method: 'post',
+            body: formData,
+          }));
+        };
+      });
       img.src = filepath;
-      return img.onload;
+      return promise;
     },
   };
 }
