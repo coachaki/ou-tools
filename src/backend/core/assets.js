@@ -1,5 +1,5 @@
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
-/* global ouapi */
+/* global ouapi, panel */
 
 if (typeof ouapi === 'object') {
   ouapi.assets = {
@@ -206,6 +206,7 @@ if (typeof ouapi === 'object') {
         force_crop: 'false',
       };
 
+      let assetData = {};
       const initializeGallery = this.newGallery(postData)
         .then(res => res.json())
         .then((json) => {
@@ -218,9 +219,11 @@ if (typeof ouapi === 'object') {
         .then(assetID => this.get(assetID))
         .then(res => res.json())
         .then((json) => {
+          assetData = json;
+          panel.outputResponse([`Empty gallery asset created with ID ${json.asset}. Adding images.`]);
           const callStack = [];
           imagePaths.forEach((path) => {
-            callStack.push(this.addImage({ filepath: path, assetData: json }));
+            callStack.push(this.addImage({ filepath: path, assetData }));
           });
 
           return Promise.resolve(callStack);
@@ -235,7 +238,32 @@ if (typeof ouapi === 'object') {
           });
 
           Promise.all(array).then((images) => {
-            console.log(images);
+            panel.outputResponse(['Proceeding to add text data to each image.']);
+
+            const { gallery } = assetData;
+            const saveData = {};
+            const imageData = {};
+
+            gallery.childNodes.forEach((child) => {
+              // eslint-disable-next-line prefer-destructuring
+              saveData[child.tagName] = child.childNodes[0];
+            });
+            images.forEach((name) => {
+              imageData[name] = {
+                title: `Title for ${name}`,
+                description: `Description for ${name}`,
+                caption: `Caption for ${name}`,
+                link: '#link',
+              };
+            });
+
+            saveData.images = JSON.stringify(imageData);
+            saveData.asset = assetData.asset;
+            saveData.type = assetData.type;
+            const saveCall = ouapi.post('/assets/save', saveData);
+            console.log(imageData);
+            console.log(saveData);
+            console.log(saveCall);
           });
         });
       });
@@ -289,6 +317,9 @@ if (typeof ouapi === 'object') {
           resolve(fetch(`${ouapi.config.apihost}/assets/add_image?${urlParams.toString()}`, {
             method: 'post',
             body: formData,
+          }).then((response) => {
+            panel.outputResponse([`> Added ${filename} to the gallery.`]);
+            return response;
           }));
         };
       });

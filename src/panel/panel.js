@@ -145,7 +145,7 @@ const panel = {
       });
   },
   async newSampleGallery() {
-    const apiCall = ouapi.assets.newSampleGallery(this.images);
+    const apiCall = ouapi.assets.newSampleGallery(this.images, this.outputResponse);
   },
 };
 
