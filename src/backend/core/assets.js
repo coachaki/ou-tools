@@ -220,7 +220,9 @@ if (typeof ouapi === 'object') {
         .then(res => res.json())
         .then((json) => {
           assetData = json;
-          panel.outputResponse([`Empty gallery asset created with ID ${json.asset}. Adding images.`]);
+          panel.outputResponse([
+            `Empty gallery asset created with ID ${json.asset}. Adding images.`,
+          ]);
           const callStack = [];
           imagePaths.forEach((path) => {
             callStack.push(this.addImage({ filepath: path, assetData }));
@@ -229,44 +231,82 @@ if (typeof ouapi === 'object') {
           return Promise.resolve(callStack);
         });
 
-      initializeGallery.then((calls) => {
-        Promise.all(calls).then((responses) => {
-          const array = [];
-          responses.forEach((response) => {
-            array.push(response.json()
-              .then(json => Promise.resolve(json.image)));
-          });
-
-          Promise.all(array).then((images) => {
-            panel.outputResponse(['Proceeding to add text data to each image.']);
-
-            const { gallery } = assetData;
-            const saveData = {};
-            const imageData = {};
-
-            gallery.childNodes.forEach((child) => {
-              // eslint-disable-next-line prefer-destructuring
-              saveData[child.tagName] = child.childNodes[0];
-            });
-            images.forEach((name) => {
-              imageData[name] = {
-                title: `Title for ${name}`,
-                description: `Description for ${name}`,
-                caption: `Caption for ${name}`,
-                link: '#link',
-              };
-            });
-
-            saveData.images = JSON.stringify(imageData);
-            saveData.asset = assetData.asset;
-            saveData.type = assetData.type;
-            const saveCall = ouapi.post('/assets/save', saveData);
-            console.log(imageData);
-            console.log(saveData);
-            console.log(saveCall);
-          });
+      return initializeGallery.then(async calls => Promise.all(calls).then(async (responses) => {
+        const array = [];
+        responses.forEach((response) => {
+          array.push(response.json().then(json => Promise.resolve(json.image)));
         });
-      });
+
+        return Promise.all(array).then((images) => {
+          panel.outputResponse(['Proceeding to add text data to each image.']);
+
+          const { gallery } = assetData;
+          const saveData = {};
+          const imageData = {};
+
+          gallery.childNodes.forEach((child) => {
+            // eslint-disable-next-line prefer-destructuring
+            saveData[child.tagName] = child.childNodes[0];
+          });
+
+          const textData = [
+            {
+              title: 'Title Only Example',
+              caption: '',
+              link: '',
+            },
+            {
+              title: 'This Has A Short Caption',
+              caption: 'This is a short caption.',
+              link: '',
+            },
+            {
+              title: 'A Short Caption and Link',
+              caption: 'This is another short caption.',
+              link:
+                  'https://omniupdate.com/blog/posts/2019/checklist-launching-college-website.html',
+            },
+            {
+              title: 'Title and Link',
+              caption: '',
+              link:
+                  'https://omniupdate.com/blog/posts/2019/university-website-redesign-guide.html',
+            },
+            {
+              title: '',
+              caption:
+                  'This image does not have a title, but it has a caption! The caption is a little longer than the other ones. This has no link.',
+              link: '',
+            },
+            {
+              title: '',
+              caption: 'This image does not have a title, but it has a caption and a link!',
+              link:
+                  'https://omniupdate.com/blog/posts/2018/how-to-attract-students-to-your-website.html',
+            },
+            {
+              title: 'Title, Caption and Link — The Whole Package',
+              caption:
+                  'This image is an example of a gallery image with a title, a long caption, and a link. This image has the whole package.',
+              link: 'https://omniupdate.com/blog/',
+            },
+          ];
+
+          images.forEach((name, i) => {
+            imageData[name] = {
+              title: textData[i].title,
+              description: `Description for sample image ${i + 1}`,
+              caption: textData[i].caption,
+              link: textData[i].link,
+            };
+          });
+
+          saveData.images = JSON.stringify(imageData);
+          saveData.asset = assetData.asset;
+          saveData.type = assetData.type;
+          return ouapi.post('/assets/save', saveData);
+        });
+      }));
     },
     async addImage(params = {}) {
       const { filepath, assetData } = params;
@@ -314,13 +354,15 @@ if (typeof ouapi === 'object') {
           formData.set('name', filename);
           formData.set('file', blob, filename);
 
-          resolve(fetch(`${ouapi.config.apihost}/assets/add_image?${urlParams.toString()}`, {
-            method: 'post',
-            body: formData,
-          }).then((response) => {
-            panel.outputResponse([`> Added ${filename} to the gallery.`]);
-            return response;
-          }));
+          resolve(
+            fetch(`${ouapi.config.apihost}/assets/add_image?${urlParams.toString()}`, {
+              method: 'post',
+              body: formData,
+            }).then((response) => {
+              panel.outputResponse([`> Added ${filename} to the gallery.`]);
+              return response;
+            }),
+          );
         };
       });
       img.src = filepath;

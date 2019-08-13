@@ -145,7 +145,13 @@ const panel = {
       });
   },
   async newSampleGallery() {
-    const apiCall = ouapi.assets.newSampleGallery(this.images, this.outputResponse);
+    const apiCall = ouapi.assets.newSampleGallery(this.images);
+    apiCall.then((res) => {
+      if (res.status === 200) {
+        this.outputResponse(['Text data has been successfully added to the gallery images.']);
+      }
+      return res.json();
+    });
   },
 };
 
