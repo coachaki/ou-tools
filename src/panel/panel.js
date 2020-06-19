@@ -148,7 +148,7 @@ const panel = {
     const apiCall = ouapi.assets.newSampleGallery(this.images);
     apiCall.then((res) => {
       if (res.status === 200) {
-        this.outputResponse(['Text data has been successfully added to the gallery images.']);
+        this.outputResponse(['Success: Sample gallery asset created.']);
       }
       return res.json();
     });

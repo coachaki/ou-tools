@@ -9,18 +9,18 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "grunt": "^1.0.4",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "grunt": "^1.1.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^4.0.1",
-    "grunt-eslint": "^21.0.0",
+    "grunt-eslint": "^23.0.0",
     "gulp": "^4.0.2",
-    "mocha": "^5.2.0",
-    "web-ext": "^3.1.0"
+    "mocha": "^8.0.0",
+    "web-ext": "^4.2.0"
   },
   "scripts": {
     "test": "mocha",
